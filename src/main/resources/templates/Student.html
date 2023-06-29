@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html th:attr="lang=${lang}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{template.html :: head}"></head>
+<body>
+<div th:insert="~{template.html :: nav}"></div>
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <button type="button" class="btn btn-primary open-modal"
+                    data-toggle="modal" data-target="#studentModal">
+                Add New Student
+            </button>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Identification</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col">Gender</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}">
+                    <td><span th:text="${student.id}"></span></td>
+                    <td><span th:text="${student.descripcion}"> </span></td>
+                    <td><span th:text="${student.precio}"> </span></td>
+                    <td>
+                        <button type="button" th:attr="idStudent=${student.id}" class="btn btn-primary open-modal"
+                                data-toggle="modal" data-target="#studentModal">
+                            edit
+                        </button>
+                        <button type="button" th:attr="idStudent=${student.id}" class="btn btn-danger open-modal btnDeleteStudent">
+                            delete
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+<!-- this is the modal-->
+    <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="formStudent" action="#" method="post" th:action="@{/student/save}" th:object="${student}">
+                        <div class="form-group d-none" >
+                            <label for="id">Id</label>
+                            <input th:field="*{id}" type="number" class="form-control" id="id"
+                                   placeholder="id">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input th:field="*{nombre}" type="number" class="form-control" id="nombre"
+                                   placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="identification">Identificacion</label>
+                            <input th:field="*{identificacion}" type="text" class="form-control" id="identificacion"
+                                   placeholder="Identificacion">
+                        </div>
+                        <div class="form-group">
+                            <label for="grade">Grado</label>
+                            <input th:field="*{nivel_cursando}" type="text" class="form-control" id="grado"
+                                   placeholder="Grado">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Edad</label>
+                            <input th:field="*{edad}" type="number" class="form-control" id="edad"
+                                   placeholder="Edad">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Altura</label>
+                            <input th:field="*{altura}" type="number" class="form-control" id="altura"
+                                   placeholder="Altura">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Peso</label>
+                            <input th:field="*{peso}" type="text" class="form-control" id="peso"
+                                   placeholder="Peso">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Género</label>
+                            <input th:field="*{genero}" type="text" class="form-control" id="genero"
+                                   placeholder="Género">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveStudent">Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<div th:insert="~{template.html :: footer}"></div>
+<div th:insert="~{template.html :: scripts}"></div>
+
+<!-- This section is really important cause we are asssigning the list of products loaded in the model, into the js -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    products = /*[[${products}]]*/ 'default';
+    /*]]>*/
+</script>
+
+<script src="../js/views/product.js"></script>
+</body>
+</html>
